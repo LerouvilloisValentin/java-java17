@@ -24,7 +24,9 @@ public class Stream_02_Test {
 		List<Order> orders = new Data().getOrders();
 
 		// TODO Trouver la liste des clients associés aux commandes
-		List<Customer> result = null;
+		List<Customer> result = orders.stream().map(Order::getCustomer).toList();
+
+//		result.forEach(c -> System.out.println(c.getFirstname() + c.getLastname()));
 
 		assertThat(result, hasSize(8));
 	}
@@ -35,7 +37,8 @@ public class Stream_02_Test {
 		List<Order> orders = new Data().getOrders();
 
 		// TODO Compter le nombre de clients associés aux commandes
-		long result = 0;
+		long result = orders.stream().map(o->o.getCustomer()).count();
+//		System.out.println(result);
 
 		assertThat(result, is(8L));
 	}
@@ -45,8 +48,11 @@ public class Stream_02_Test {
 
 		List<Order> orders = new Data().getOrders();
 
-		// TODO Trouver la liste des différents clients associés aux commandes (sans doublons)
-		List<Customer> result = null;
+		// TODO Trouver la liste des différents clients associés aux commandes (sans
+		// doublons)
+		List<Customer> result = orders.stream().map(o->o.getCustomer()).distinct().toList();
+
+//		result.forEach(o -> System.out.println(o.getLastname() + " " + o.getFirstname()));
 
 		assertThat(result, hasSize(2));
 	}
@@ -57,7 +63,8 @@ public class Stream_02_Test {
 		List<Order> orders = new Data().getOrders();
 
 		// TODO Compter le nombre des différents clients associés aux commandes
-		long result = 0L;
+		long result = orders.stream().map(o->o.getCustomer()).distinct().count();
+//		System.out.println(result);
 
 		assertThat(result, is(2L));
 	}
@@ -71,7 +78,8 @@ public class Stream_02_Test {
 		 * TODO Calculer le chiffre d'affaires total de la pizzeria (somme des prix des
 		 * commandes)
 		 */
-		double result = 0.0;
+		double result = orders.stream().mapToDouble(o->o.getPrice()).sum();
+//		System.out.println(result);
 
 		assertThat(result, is(10900.0));
 	}
@@ -84,7 +92,8 @@ public class Stream_02_Test {
 		/*
 		 * TODO Calculer le prix moyen d'une commande
 		 */
-		OptionalDouble result = null;
+		OptionalDouble result = orders.stream().mapToDouble(o->o.getPrice()).average();
+		System.out.println(result);
 
 		assertThat(result.isPresent(), is(true));
 		assertThat(result.getAsDouble(), is(1362.5));

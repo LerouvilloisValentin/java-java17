@@ -62,4 +62,9 @@ public class Order {
 	public int hashCode() {
 		return id != null ? id.hashCode() : 0;
 	}
+
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", customer=" + customer + ", pizzas=" + pizzas + "]";
+	}
 }
